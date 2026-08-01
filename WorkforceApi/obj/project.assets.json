@@ -3162,19 +3162,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\youssef.mehdi\\.nuget\\packages\\": {}
+    "C:\\Users\\youdi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\youssef.mehdi\\myFiles\\github\\WorkforceManagement\\WorkforceApi\\WorkforceApi.csproj",
+      "projectUniqueName": "C:\\Users\\youdi\\myFiles\\github\\WorkforceManagement\\WorkforceApi\\WorkforceApi.csproj",
       "projectName": "WorkforceApi",
-      "projectPath": "C:\\Users\\youssef.mehdi\\myFiles\\github\\WorkforceManagement\\WorkforceApi\\WorkforceApi.csproj",
-      "packagesPath": "C:\\Users\\youssef.mehdi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\youssef.mehdi\\myFiles\\github\\WorkforceManagement\\WorkforceApi\\obj\\",
+      "projectPath": "C:\\Users\\youdi\\myFiles\\github\\WorkforceManagement\\WorkforceApi\\WorkforceApi.csproj",
+      "packagesPath": "C:\\Users\\youdi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\youdi\\myFiles\\github\\WorkforceManagement\\WorkforceApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\youssef.mehdi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\youdi\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
