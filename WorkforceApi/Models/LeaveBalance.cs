@@ -1,5 +1,6 @@
 namespace WorkforceApi.Models;
 
+// defining LeaveBalance table
 public class LeaveBalance
 {
 	public int Id {get; set;}

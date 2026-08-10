@@ -5,20 +5,23 @@ using WorkforceApi.Data;
 namespace WorkforceApi.Controllers;
 
 [ApiController]
-[Route("api/[Controller]")]
+[Route("api/[controller]")]
 public class LeaveTypesController : ControllerBase
 {
+	// const to hold db context
 	private readonly WorkforceContext _context;
 
+	// store given context
 	public LeaveTypesController(WorkforceContext context)
 	{
 		_context = context;
 	}
 
+	// function to get all rows from the LeaveTypes table
 	[HttpGet]
 	public async Task<IActionResult> GetLeaveTypes()
 	{
-		var LeaveTypes = await _context.LeaveTypes.ToListAsync();
-		return Ok(LeaveTypes);
+		var leaveTypes = await _context.LeaveTypes.ToListAsync();
+		return Ok(leaveTypes);
 	}
 }

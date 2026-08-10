@@ -1,5 +1,6 @@
 namespace WorkforceApi.Models;
 
+// defining Employee table
 public class Employee
 {
 	public int Id {get; set;}

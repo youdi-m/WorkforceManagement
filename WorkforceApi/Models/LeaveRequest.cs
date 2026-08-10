@@ -1,5 +1,6 @@
 namespace WorkforceApi.Models;
 
+// defining LeaveRequest table
 public class LeaveRequest
 {
 	public int Id {get; set;}

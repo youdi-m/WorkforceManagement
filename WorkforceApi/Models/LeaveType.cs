@@ -1,5 +1,6 @@
 namespace WorkforceApi.Models;
 
+// defining LeaveType table
 public class LeaveType
 {
 	public int Id {get; set;}
