@@ -9,5 +9,6 @@ public class Employee
 	public required string Title {get; set;}
 	public int? ManagerId {get; set;}
 	public Employee? Manager {get; set;}
+	public EmployeeStatus Status {get; set;} = EmployeeStatus.Active;
 	
 }

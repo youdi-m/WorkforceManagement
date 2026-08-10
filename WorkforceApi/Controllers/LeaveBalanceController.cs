@@ -5,6 +5,8 @@ using WorkforceApi.Data;
 [ApiController]
 [Route("api/[controller]")]
 
+//TODO: remove this, balances are accessed through employees
+
 public class LeaveBalanceController : ControllerBase
 {
 	// const to hold db context

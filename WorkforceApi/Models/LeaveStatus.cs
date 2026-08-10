@@ -1,7 +1,7 @@
 namespace WorkforceApi.Models;
 
 // defining LeaveRequest enum
-	public enum LeaveStatus
+public enum LeaveStatus
 {
 	Requested,
 	LeadApproved,

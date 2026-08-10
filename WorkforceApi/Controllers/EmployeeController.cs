@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WorkforceApi.Data;
 using Microsoft.EntityFrameworkCore;
+using WorkforceApi.Models;
 
 namespace WorkforceApi.Controllers;
 
@@ -23,5 +24,50 @@ public class EmployeeController : ControllerBase
 	{
 		var employees = await _context.Employees.ToListAsync();
 		return Ok(employees);
+	}
+
+	// function to create a new employee
+	[HttpPost]
+	public async Task<IActionResult> CreateEmployee(Employee employee)
+	{
+
+		_context.Employees.Add(employee);
+		await _context.SaveChangesAsync();
+		return CreatedAtAction(nameof(GetEmployees), new {id = employee.Id}, employee);
+	}
+
+	// function to offboard an employee
+	[HttpPut("{Id}")]
+	public async Task<IActionResult> UpdateEmployee(int id, Employee updatedEmployee)
+	{
+		// look for employee, return 404 if not found
+		var employee = await _context.Employees.FindAsync(id);
+		if (employee == null) return NotFound();
+
+		// update employee
+		employee.FirstName = updatedEmployee.FirstName;
+		employee.LastName = updatedEmployee.LastName;
+		employee.Title = updatedEmployee.Title;
+		employee.ManagerId = updatedEmployee.ManagerId;
+
+		// save and return NoContent
+		await _context.SaveChangesAsync();
+		return NoContent();
+	}
+
+	// function to offboard employees
+	[HttpPut("{Id}/offboard")]
+	public async Task<IActionResult> OffboardEmployee(int id)
+	{
+		// find employee, return 404 if not found
+		var employee = await _context.Employees.FindAsync(id);
+		if (employee == null) return NotFound();
+
+		// set status to offboarded
+		employee.Status = EmployeeStatus.Offboarded;
+
+		// save and return no content
+		await _context.SaveChangesAsync();
+		return NoContent();
 	}
 }
