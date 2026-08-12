@@ -1,14 +1,20 @@
-import { useState } from 'react'
 import './App.css'
+import { Route, Routes } from 'react-router-dom'
+
+import EmployeeDashboard from './pages/EmployeeDashboard'
+import HrDashboard from './pages/HrDashboard'
+import LeadDashboard from './pages/LeadDashboard'
+import Login from './pages/Login'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div>
-      <h1>Workforce Management</h1>
-      <button onClick={() => setCount(count + 1)}> Count is {count}</button>
-    </div>
+    // defining routes
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/employee" element={<EmployeeDashboard />} />
+      <Route path="/lead" element={<LeadDashboard />} />
+      <Route path="/hr" element={<HrDashboard />} />
+    </Routes>
   )
 }
 
