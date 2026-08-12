@@ -316,3 +316,4 @@ C:\Users\youdi\myFiles\github\WorkforceManagement\WorkforceApi\obj\Debug\net10.0
 C:\Users\youdi\myFiles\github\WorkforceManagement\WorkforceApi\obj\Debug\net10.0\WorkforceApi.pdb
 C:\Users\youdi\myFiles\github\WorkforceManagement\WorkforceApi\obj\Debug\net10.0\WorkforceApi.genruntimeconfig.cache
 C:\Users\youdi\myFiles\github\WorkforceManagement\WorkforceApi\obj\Debug\net10.0\ref\WorkforceApi.dll
+C:\Users\youssef.mehdi\myFiles\github\WorkforceManagement\WorkforceApi\bin\Debug\net10.0\BCrypt-Net-Next.dll

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkforceApi.Data;
 
@@ -11,9 +12,11 @@ using WorkforceApi.Data;
 namespace WorkforceApi.Migrations
 {
     [DbContext(typeof(WorkforceContext))]
-    partial class WorkforceContextModelSnapshot : ModelSnapshot
+    [Migration("20260812175356_AddEmployeeAuthFields")]
+    partial class AddEmployeeAuthFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,6 @@ namespace WorkforceApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -45,19 +44,15 @@ namespace WorkforceApi.Migrations
                     b.Property<int?>("ManagerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("role")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

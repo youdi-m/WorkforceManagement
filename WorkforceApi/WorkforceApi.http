@@ -1,6 +1,11 @@
-@WorkforceApi_HostAddress = http://localhost:5016
+POST http://localhost:5016/api/employee
+Content-Type: application/json
 
-GET {{WorkforceApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
+{
+  "firstName": "Admin",
+  "lastName": "User",
+  "email": "admin@company.com",
+  "passwordHash": "Elpasso-00112",
+  "title": "Administrator",
+  "role": 2
+}

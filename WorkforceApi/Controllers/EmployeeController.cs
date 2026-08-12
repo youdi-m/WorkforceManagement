@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using WorkforceApi.Data;
 using Microsoft.EntityFrameworkCore;
 using WorkforceApi.Models;
+using BCrypt.Net;
 
 namespace WorkforceApi.Controllers;
 
@@ -30,7 +31,9 @@ public class EmployeeController : ControllerBase
 	[HttpPost]
 	public async Task<IActionResult> CreateEmployee(Employee employee)
 	{
-
+		// hashing password before storing in db
+		employee.PasswordHash = BCrypt.Net.BCrypt.HashPassword(employee.PasswordHash);
+		
 		_context.Employees.Add(employee);
 		await _context.SaveChangesAsync();
 		return CreatedAtAction(nameof(GetEmployees), new {id = employee.Id}, employee);
