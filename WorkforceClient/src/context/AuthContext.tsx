@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react"
 import type { ReactNode } from "react";
 
-// declating shape
+// declaring new type
 interface AuthContextType {
 	role: string | null
 	setRole: (role: string | null) => void
