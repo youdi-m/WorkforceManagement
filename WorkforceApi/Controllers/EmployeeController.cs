@@ -39,8 +39,8 @@ public class EmployeeController : ControllerBase
 		return CreatedAtAction(nameof(GetEmployees), new {id = employee.Id}, employee);
 	}
 
-	// function to offboard an employee
-	[HttpPut("{Id}")]
+	// function to update an employee
+	[HttpPut("{Id}/update")]
 	public async Task<IActionResult> UpdateEmployee(int id, Employee updatedEmployee)
 	{
 		// look for employee, return 404 if not found
