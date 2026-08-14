@@ -10,14 +10,15 @@ namespace WorkforceApi.Controllers;
 
 public class AuthController : ControllerBase
 {
-
+	// holding db context
 	private readonly WorkforceContext _context;
-
+	// store given context
 	public AuthController(WorkforceContext context)
 	{
 		_context = context;
 	}
 
+	// function to search for email, verify password and return user id, email and role upon success
 	[HttpPost("Login")]
 	public async Task<IActionResult> LoginUser(LoginRequest request)
 	{
@@ -29,4 +30,5 @@ public class AuthController : ControllerBase
 
 		return Ok(new {user.Id, user.Email, user.Role});
 	}
+
 }

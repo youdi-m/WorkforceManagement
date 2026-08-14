@@ -15,7 +15,7 @@ export function AuthProvider({children} : {children: ReactNode}){
 	const [role, setRole] = useState<string | null>(null)
 
 	return (
-		// hold the role and provides it to wrapped children
+		// holds the role and provides it to wrapped children
 		<AuthContext.Provider value={{role, setRole}}>
 			{children}
 		</AuthContext.Provider>

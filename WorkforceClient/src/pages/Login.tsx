@@ -2,13 +2,18 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { useState } from "react"
 
+// function to authenticate the user and navigate them to the proper page based on their role.
 function Login() {
+	// used to navigate to the needed page
 	const navigate = useNavigate()
+	// deconstructing userAuth to grab the setRole funtion
 	const {setRole} = useAuth()
 
+	// email and password getter/setters
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
+	// sending POST request and routing appropriately
 	const handleLogin = async () => {
 		const response = await fetch('http://localhost:5016/api/auth/login', {
 			method: 'POST',
@@ -16,25 +21,30 @@ function Login() {
 			body: JSON.stringify({ email: email, password: password })
 		})
 
-		if(response.ok){
-			const data = await response.json()
-			setRole(data.role)
-
-			if(data.role == 0) {
+		// grabbing role from request and setting it
+		const data = await response.json()
+		setRole(data.role)
+		
+		// switch case to navigate depending on role
+		switch(data.role){
+			case 0: {
 				navigate('/employee')
+				break
 			}
-
-			else if(data.role == 1) {
+			case 1: {
 				navigate('/lead')
+				break
 			}
-
-			else if(data.role == 2) {
+			case 2: {
 				navigate('/hr')
+				break
+			}
+			// default for invalid credentials
+			default: {
+				alert('Invalid Creds')
+				break
 			}
 		}
-			else {
-				alert('Invalid Creds')
-			}
 	}
 
 	return (
