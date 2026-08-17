@@ -41,7 +41,7 @@ function Login() {
 			}
 			// default for invalid credentials
 			default: {
-				alert('Invalid Creds')
+				alert('Invalid Credentials')
 				break
 			}
 		}
