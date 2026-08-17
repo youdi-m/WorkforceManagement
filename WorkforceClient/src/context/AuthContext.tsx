@@ -5,6 +5,8 @@ import type { ReactNode } from "react";
 interface AuthContextType {
 	role: string | null
 	setRole: (role: string | null) => void
+	token: string | null
+	setToken: (token: string | null) => void
 }
 
 // declaring undefined context
@@ -13,10 +15,11 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // function to wrap the app
 export function AuthProvider({children} : {children: ReactNode}){
 	const [role, setRole] = useState<string | null>(null)
+	const [token, setToken] = useState<string | null>(localStorage.getItem('token'))
 
 	return (
-		// holds the role and provides it to wrapped children
-		<AuthContext.Provider value={{role, setRole}}>
+		// holds the role and token and provides it to wrapped children
+		<AuthContext.Provider value={{role, setRole, token, setToken}}>
 			{children}
 		</AuthContext.Provider>
 	)

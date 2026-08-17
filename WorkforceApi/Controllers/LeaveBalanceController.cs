@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorkforceApi.Data;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 
 //TODO: remove this, balances are accessed through employees
 

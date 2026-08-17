@@ -6,8 +6,8 @@ import { useState } from "react"
 function Login() {
 	// used to navigate to the needed page
 	const navigate = useNavigate()
-	// deconstructing userAuth to grab the setRole funtion
-	const {setRole} = useAuth()
+	// deconstructing userAuth to grab the setRole and setToken funtions
+	const {setRole, setToken} = useAuth()
 
 	// email and password getter/setters
 	const [email, setEmail] = useState('')
@@ -17,34 +17,48 @@ function Login() {
 	const handleLogin = async () => {
 		const response = await fetch('http://localhost:5016/api/auth/login', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json',
+								 'Authorization': 'Bearer ${token}'
+			 },
 			body: JSON.stringify({ email: email, password: password })
 		})
 
-		// grabbing role from request and setting it
-		const data = await response.json()
-		setRole(data.role)
-		
-		// switch case to navigate depending on role
-		switch(data.role){
-			case 0: {
-				navigate('/employee')
-				break
-			}
-			case 1: {
-				navigate('/lead')
-				break
-			}
-			case 2: {
-				navigate('/hr')
-				break
-			}
-			// default for invalid credentials
-			default: {
-				alert('Invalid Credentials')
-				break
+		if (response.ok)
+		{
+			// grabbing role from request and setting it
+			const data = await response.json()
+			setRole(data.role)
+			
+			// setting token and saving so it persists across refresh
+			setToken(data.token)
+			localStorage.setItem('token', data.token)
+
+			// switch case to navigate depending on role
+			switch(data.role){
+				case 0: {
+					navigate('/employee')
+					break
+				}
+				case 1: {
+					navigate('/lead')
+					break
+				}
+				case 2: {
+					navigate('/hr')
+					break
+				}
+				// default for unknown role
+				default: {
+					alert('Unknown Role')
+					break
+				}
 			}
 		}
+		else
+		{
+			alert('Invalid credentials') 
+		}
+		
 	}
 
 	return (

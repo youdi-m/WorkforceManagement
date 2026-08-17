@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using WorkforceApi.Data;
 using Microsoft.EntityFrameworkCore;
 using WorkforceApi.Models;
-using BCrypt.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WorkforceApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class EmployeeController : ControllerBase
 {
 	// const to hold db context
