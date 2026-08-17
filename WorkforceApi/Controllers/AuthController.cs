@@ -63,7 +63,7 @@ public class AuthController : ControllerBase
 		var token = new JwtSecurityToken(
 			issuer: _config["Jwt:Issuer"],
 			claims: claims,
-			expires: DateTime.UtcNow.AddDays(1),
+			expires: DateTime.UtcNow.AddHours(2),
 			signingCredentials: creds);
 
 		// return token as string
