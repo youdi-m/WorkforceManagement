@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { useState } from "react"
-
+import './Login.css'
 // function to authenticate the user and navigate them to the proper page based on their role.
 function Login() {
 	// used to navigate to the needed page
@@ -62,13 +62,17 @@ function Login() {
 	}
 
 	return (
-		<div>
-			<h1>Login</h1>
-			<input type="text" placeholder="email"
-				value={email} onChange={e => setEmail(e.target.value)} />
-			<input type="password" placeholder="password"
-				value={password} onChange={e => setPassword(e.target.value)} />
-			<button onClick={handleLogin}>Login</button>
+		<div className="mainContainer">
+			<div className="loginContainer">
+				<form className='loginForm'>
+					<h3>Workforce Manager</h3>
+					<input type="text" placeholder="email"
+						value={email} onChange={e => setEmail(e.target.value)} />
+					<input type="password" placeholder="password"
+						value={password} onChange={e => setPassword(e.target.value)} />
+					<button type="button" onClick={handleLogin}>Login</button>
+				</form>
+			</div>
 		</div>
 	)
 }
