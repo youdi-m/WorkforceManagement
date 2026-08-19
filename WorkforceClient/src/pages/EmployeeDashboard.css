@@ -13,7 +13,7 @@ html, body {
 
 .navContainer {
 	width: 100%;
-	height: 10%;
+	height: 7%;
 
 	display: flex;
 	flex-direction: row;
@@ -30,7 +30,6 @@ html, body {
 	align-items: center;
 	justify-content: flex-start;
 	margin-left: 1%;
-	padding: 10px;
 }
 
 .navContainerRight {

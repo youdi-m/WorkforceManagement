@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { useState } from "react"
 import './Login.css'
+
 // function to authenticate the user and navigate them to the proper page based on their role.
 function Login() {
 	// used to navigate to the needed page
@@ -12,6 +13,9 @@ function Login() {
 	// email and password getter/setters
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+
+	// const to show and hide the login container
+	const [showLogin, setShowLogin] = useState(false);
 
 	// sending POST request and routing appropriately
 	const handleLogin = async () => {
@@ -63,7 +67,17 @@ function Login() {
 
 	return (
 		<div className="mainContainer">
-			<div className="loginContainer">
+			<div className='navContainer'>
+				<div className='navContainerLeft'>
+					<a>TeamForge</a>
+				</div>
+				<div className='navContainerRight'>
+					<a>About</a>
+					<a onClick={() => setShowLogin(true)}>Sign In</a>
+				</div>
+			</div>
+
+			{showLogin && <div className="loginContainer">
 				<form className='loginForm'>
 					<h3>Workforce Manager</h3>
 					<input type="text" placeholder="email"
@@ -72,7 +86,7 @@ function Login() {
 						value={password} onChange={e => setPassword(e.target.value)} />
 					<button type="button" onClick={handleLogin}>Login</button>
 				</form>
-			</div>
+			</div>}
 		</div>
 	)
 }

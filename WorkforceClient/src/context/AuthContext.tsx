@@ -7,6 +7,7 @@ interface AuthContextType {
 	setRole: (role: string | null) => void
 	token: string | null
 	setToken: (token: string | null) => void
+	Logout: () => void
 }
 
 // declaring undefined context
@@ -17,9 +18,17 @@ export function AuthProvider({children} : {children: ReactNode}){
 	const [role, setRole] = useState<string | null>(null)
 	const [token, setToken] = useState<string | null>(localStorage.getItem('token'))
 
+	// function to handle logout
+	function Logout() {
+
+		setRole(null)
+		setToken(null)
+		localStorage.removeItem('token')
+	}
+
 	return (
 		// holds the role and token and provides it to wrapped children
-		<AuthContext.Provider value={{role, setRole, token, setToken}}>
+		<AuthContext.Provider value={{role, setRole, token, setToken, Logout}}>
 			{children}
 		</AuthContext.Provider>
 	)
