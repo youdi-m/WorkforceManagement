@@ -22,6 +22,15 @@
 	background-color: #2e303a;
 	border-radius: 13px;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+	opacity: 0;
+	transition: opacity 1s ease, transform 1s ease;
+	transform: translateY(50px);
+}
+
+.loginContainer.visible {
+	opacity: 1;
+	transform: translateY(0px);
 }
 
 .loginForm {

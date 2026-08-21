@@ -21,9 +21,7 @@ function Login() {
 	const handleLogin = async () => {
 		const response = await fetch('http://localhost:5016/api/auth/login', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json',
-								 'Authorization': 'Bearer ${token}'
-			 },
+			headers: { 'Content-Type': 'application/json',},
 			body: JSON.stringify({ email: email, password: password })
 		})
 
@@ -77,16 +75,16 @@ function Login() {
 				</div>
 			</div>
 
-			{showLogin && <div className="loginContainer">
+			<div className={showLogin ? 'loginContainer visible' : 'loginContainer'}>
 				<form className='loginForm'>
-					<h3>Workforce Manager</h3>
+					<h3>TeamForge Login</h3>
 					<input type="text" placeholder="email"
 						value={email} onChange={e => setEmail(e.target.value)} />
 					<input type="password" placeholder="password"
 						value={password} onChange={e => setPassword(e.target.value)} />
 					<button type="button" onClick={handleLogin}>Login</button>
 				</form>
-			</div>}
+			</div>
 		</div>
 	)
 }
