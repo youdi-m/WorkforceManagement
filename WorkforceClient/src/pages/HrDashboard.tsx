@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { useEffect, useState } from "react"
+import StatusDisplay from "../components/StatusIndicator"
+import RoleDisplay from "../components/RoleIndicator"
 import './HrDashboard.css'
 
 interface EmployeeType {
-	id: string
+	id: number
 	firstName: string
 	lastName: string
 	email: string
-	role: string
+	role: number
 	manager: string
 	status: string
 }
@@ -40,9 +42,8 @@ function HrDashboard() {
 		}
 	}
 
-
 	return (
-		<div className="mainContainer">
+		<div className='mainContainer'>
 			<div className='navContainer'>
 				<div className='navContainerLeft'>
 					<a>HR Dashboard</a>
@@ -55,14 +56,14 @@ function HrDashboard() {
 			<div className='displayContainer'>
 				<div className='employeeContainer'>
 					{employee.map(emp => (
-						<div key={emp.id}>
-							<div>{emp.id}</div>
-							<div><input value={emp.firstName}></input></div>
-							<div><input value={emp.lastName}></input></div>
-							<div><input value={emp.email}></input></div>
-							<div>{emp.role}</div>
+						<div className='employeeRow' key={emp.id}>
+							<div id='statusDiv'><StatusDisplay status={emp.status}/></div>
+							<div id='idDiv'>{emp.id}</div>
+							<div>{emp.firstName}</div>
+							<div>{emp.lastName}</div>
+							<div id='emailDiv'>{emp.email}</div>
+							<div><RoleDisplay role={emp.role}/></div>
 							<div>{emp.manager}</div>
-							<div>{emp.status}</div>
 						</div>
 					))}
 				</div>
