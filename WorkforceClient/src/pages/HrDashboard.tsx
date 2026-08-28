@@ -64,6 +64,7 @@ function HrDashboard() {
 							<div id='emailDiv'>{emp.email}</div>
 							<div><RoleDisplay role={emp.role}/></div>
 							<div>{emp.manager}</div>
+							<button id='checkEmployeeButton'>X</button>
 						</div>
 					))}
 				</div>
