@@ -77,10 +77,14 @@ a {
 	display: grid;
 	grid-auto-flow: column;
 	grid-template-columns: auto auto auto;
+
 	justify-content: start;
 	align-items: center;
+
+	margin-bottom: 3px;
+
 	border: #08060d 1px solid;
-	border-radius: 5px;
+	border-radius: 7px;
 
 	background-color: #9ca3af;
 }
@@ -92,27 +96,30 @@ a {
 .employeeRow div {
 	width: 200px;
 	height: 30px;
+	padding: 2px;
 
-	padding-left: 5px;
-	margin-right: 50px;
-	border: 1px black solid;
-	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 #statusDiv {
-	width: 15px;
-	margin-right: 30px;
-	border: none;
+	width: 20px;
+
+	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
 #statusDiv span {
 	width: 10px;
 	height: 10px;
+
+	display: block;
+	align-items: center;
+	justify-content: center;
+
 	border-radius: 50%;
-
-	background-color: #08060d;
-
 }
 
 #idDiv {
@@ -123,13 +130,32 @@ a {
 	width: 300px;
 }
 
-#checkEmployeeButton {
-	width: 30px;
-	height: 30px;
+.employeeInformationContainer {
+	width: 1200px;
+	height: 700px;
 
-	margin: 5px;
+	display: block;
+	position: absolute;
 
+	margin-top: 550px;
+	border-radius: 7px;
+
+	color: #08060d;
+	background-color: #b1b8c5;
+}
+
+.informationHeader {
+	width: 100%;
+	display: flex;
 	justify-content: center;
-	align-items: center;
+
+	background-color: rgb(29, 138, 235);
+}
+
+#empInformationCloseButton {
+	float: right;
+}
+
+.employeeInformation {
 
 }

@@ -11,7 +11,8 @@ interface EmployeeType {
 	lastName: string
 	email: string
 	role: number
-	manager: string
+	title: string
+	managerId: number
 	status: string
 }
 
@@ -20,7 +21,7 @@ function HrDashboard() {
 	const navigate = useNavigate();
 	const {token, Logout} = useAuth()
 	const [employee, setEmployees] = useState<EmployeeType[]>([])
-
+	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeType | null>(null)
 	useEffect(() => {
 		showEmployees()
 	}, [])
@@ -38,7 +39,7 @@ function HrDashboard() {
 		}
 		else
 		{
-			alert("Error Fetching Employees")
+			console.log("Error Fetching Employees")
 		}
 	}
 
@@ -56,19 +57,37 @@ function HrDashboard() {
 			<div className='displayContainer'>
 				<div className='employeeContainer'>
 					{employee.map(emp => (
-						<div className='employeeRow' key={emp.id}>
+						<div onClick={() => setSelectedEmployee(emp)} className='employeeRow' key={emp.id}>
 							<div id='statusDiv'><StatusDisplay status={emp.status}/></div>
 							<div id='idDiv'>{emp.id}</div>
 							<div>{emp.firstName}</div>
 							<div>{emp.lastName}</div>
 							<div id='emailDiv'>{emp.email}</div>
 							<div><RoleDisplay role={emp.role}/></div>
-							<div>{emp.manager}</div>
-							<button id='checkEmployeeButton'>X</button>
+							<div>{emp.title}</div>
+							<div>{emp.managerId}</div>
 						</div>
 					))}
 				</div>
 			</div>
+			{selectedEmployee && (
+				<div className='employeeInformationContainer'>
+						<div className='informationHeader'>
+							<h2>{selectedEmployee.firstName} {selectedEmployee.lastName} {selectedEmployee.id}</h2>
+							<button id='empInformationCloseButton' onClick={() => setSelectedEmployee(null)}>X</button>
+						</div>
+
+						<div className='employeeInformation'>
+							<div><h3>{selectedEmployee.firstName}</h3></div>
+							<div><h3>{selectedEmployee.lastName}</h3></div>
+							<div><h3>{selectedEmployee.email}</h3></div>
+							<div><h3>{selectedEmployee.role}</h3></div>
+							<div><h3>{selectedEmployee.title}</h3></div>
+							<div><h3>{selectedEmployee.managerId}</h3></div>
+							<div><h3>{selectedEmployee.status}</h3></div>
+						</div>
+				</div>
+			)}
 		</div>
 		)
 }
