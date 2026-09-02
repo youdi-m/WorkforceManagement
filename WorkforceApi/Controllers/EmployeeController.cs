@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using WorkforceApi.Data;
 using Microsoft.EntityFrameworkCore;
-using WorkforceApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using WorkforceApi.Data;
+using WorkforceApi.Models;
+using WorkforceApi.Dtos;
 
 namespace WorkforceApi.Controllers;
 
@@ -41,26 +42,35 @@ public class EmployeeController : ControllerBase
 	}
 
 	// function to update an employee
-	[HttpPut("{Id}/update")]
-	public async Task<IActionResult> UpdateEmployee(int id, Employee updatedEmployee)
+	[HttpPut("update/{id}")]
+	public async Task<IActionResult> UpdateEmployee(int id, UpdateEmployee updatedEmployee)
 	{
 		// look for employee, return 404 if not found
 		var employee = await _context.Employees.FindAsync(id);
-		if (employee == null) return NotFound();
 
-		// update employee
-		employee.FirstName = updatedEmployee.FirstName;
-		employee.LastName = updatedEmployee.LastName;
-		employee.Title = updatedEmployee.Title;
-		employee.ManagerId = updatedEmployee.ManagerId;
+		if (employee == null)
+		{
+			return NotFound();
+		}
+		else
+		{
+			// update employee
+			employee.FirstName = updatedEmployee.FirstName;
+			employee.LastName = updatedEmployee.LastName;
+			employee.Email = updatedEmployee.Email;
+			//employee.Role = updatedEmployee.Role;
+			employee.Title = updatedEmployee.Title;
+			//employee.ManagerId = updatedEmployee.ManagerId;
 
-		// save and return NoContent
-		await _context.SaveChangesAsync();
-		return NoContent();
+
+			// save and return NoContent
+			await _context.SaveChangesAsync();
+			return NoContent();
+		}
 	}
 
 	// function to offboard employees
-	[HttpPut("{Id}/offboard")]
+	[HttpPut("offboard/{id}")]
 	public async Task<IActionResult> OffboardEmployee(int id)
 	{
 		// find employee, return 404 if not found

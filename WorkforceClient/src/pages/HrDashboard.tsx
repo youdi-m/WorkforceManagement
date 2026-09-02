@@ -22,6 +22,14 @@ function HrDashboard() {
 	const {token, Logout} = useAuth()
 	const [employee, setEmployees] = useState<EmployeeType[]>([])
 	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeType | null>(null)
+
+	const [firstName, setFirstName] = useState('')
+	const [lastName, setLastName] = useState('')
+	const [email, setEmail] = useState('')
+	const [role, setRole] = useState('')
+	const [title, setTitle] = useState('')
+	const [managerId, setManagerId] = useState('')
+	const [status, setStatus] = useState('')
 	useEffect(() => {
 		showEmployees()
 	}, [])
@@ -40,6 +48,24 @@ function HrDashboard() {
 		else
 		{
 			console.log("Error Fetching Employees")
+		}
+	}
+
+	async function updateEmployee() {
+		const response = await fetch(`http://localhost:5016/api/employee/update/${selectedEmployee.id}`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+			body: JSON.stringify({firstName: firstName, lastName: lastName, email: email,
+														title: title,
+			 })
+		})
+
+		if(response.ok) {
+			console.log('updating employee')
+		}
+		else
+		{
+			console.log('error updating employee')
 		}
 	}
 
@@ -78,14 +104,20 @@ function HrDashboard() {
 						</div>
 
 						<div className='employeeInformation'>
-							<div><h3>{selectedEmployee.firstName}</h3></div>
-							<div><h3>{selectedEmployee.lastName}</h3></div>
-							<div><h3>{selectedEmployee.email}</h3></div>
-							<div><h3>{selectedEmployee.role}</h3></div>
-							<div><h3>{selectedEmployee.title}</h3></div>
-							<div><h3>{selectedEmployee.managerId}</h3></div>
-							<div><h3>{selectedEmployee.status}</h3></div>
+							<div>First Name<input onChange={e => setFirstName(e.target.value)}></input></div>
+
+							<div>Last Name<input value={selectedEmployee.lastName} onChange={e => setLastName(e.target.value)}></input></div>
+
+							<div>Email<input value={selectedEmployee.email} onChange={e => setEmail(e.target.value)}></input></div>
+
+							<div>Role<input value={selectedEmployee.role} onChange={e => setRole(e.target.value)}></input></div>
+
+							<div>Title<input value={selectedEmployee.title} onChange={e => setTitle(e.target.value)}></input></div>
+
+							<div>Manager<input value={selectedEmployee.managerId} onChange={e => setManagerId(e.target.value)}></input></div>
+
 						</div>
+						<button onClick={updateEmployee}>submit</button>
 				</div>
 			)}
 		</div>
