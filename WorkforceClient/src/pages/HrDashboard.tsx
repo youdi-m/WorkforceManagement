@@ -13,7 +13,7 @@ interface EmployeeType {
 	role: number
 	title: string
 	managerId: number
-	status: string
+	status: number
 }
 
 function HrDashboard() {
@@ -30,10 +30,13 @@ function HrDashboard() {
 	const [title, setTitle] = useState('')
 	const [managerId, setManagerId] = useState('')
 	const [status, setStatus] = useState('')
+
+	// populate dashboard with employees on first render
 	useEffect(() => {
 		showEmployees()
 	}, [])
 
+	// GET request to show employees on the dashboard
 	async function showEmployees() {
 
 		const response = await fetch('http://localhost:5016/api/employee', {
@@ -51,21 +54,28 @@ function HrDashboard() {
 		}
 	}
 
+	// PUT request to update employee
 	async function updateEmployee() {
-		const response = await fetch(`http://localhost:5016/api/employee/update/${selectedEmployee.id}`, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-			body: JSON.stringify({firstName: firstName, lastName: lastName, email: email,
-														title: title,
-			 })
-		})
 
-		if(response.ok) {
-			console.log('updating employee')
-		}
-		else
+		if (selectedEmployee?.id != null)
 		{
-			console.log('error updating employee')
+			const response = await fetch(`http://localhost:5016/api/employee/update/${selectedEmployee.id}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+				body: JSON.stringify({firstName: firstName, lastName: lastName, email: email,
+															role: Number(role), title: title, managerId: Number(managerId), status: Number(status)
+				})
+			})
+
+			if(response.ok) {
+				console.log('updating employee')
+				showEmployees()
+			}
+			else
+			{
+				console.log('error updating employee')
+				
+			}
 		}
 	}
 
@@ -106,15 +116,18 @@ function HrDashboard() {
 						<div className='employeeInformation'>
 							<div>First Name<input onChange={e => setFirstName(e.target.value)}></input></div>
 
-							<div>Last Name<input value={selectedEmployee.lastName} onChange={e => setLastName(e.target.value)}></input></div>
+							<div>Last Name<input onChange={e => setLastName(e.target.value)}></input></div>
 
-							<div>Email<input value={selectedEmployee.email} onChange={e => setEmail(e.target.value)}></input></div>
+							<div>Email<input onChange={e => setEmail(e.target.value)}></input></div>
 
-							<div>Role<input value={selectedEmployee.role} onChange={e => setRole(e.target.value)}></input></div>
+							<div>Role<input onChange={e => setRole(e.target.value)}></input></div>
 
-							<div>Title<input value={selectedEmployee.title} onChange={e => setTitle(e.target.value)}></input></div>
+							<div>Title<input onChange={e => setTitle(e.target.value)}></input></div>
 
-							<div>Manager<input value={selectedEmployee.managerId} onChange={e => setManagerId(e.target.value)}></input></div>
+							<div>Manager<input onChange={e => setManagerId(e.target.value)}></input></div>
+
+							<div>Status<input onChange={e => setStatus(e.target.value)}></input></div>
+
 
 						</div>
 						<button onClick={updateEmployee}>submit</button>

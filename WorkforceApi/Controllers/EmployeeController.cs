@@ -43,11 +43,15 @@ public class EmployeeController : ControllerBase
 
 	// function to update an employee
 	[HttpPut("update/{id}")]
+	
 	public async Task<IActionResult> UpdateEmployee(int id, UpdateEmployee updatedEmployee)
 	{
+		if (!ModelState.IsValid) return BadRequest(ModelState);
 		// look for employee, return 404 if not found
 		var employee = await _context.Employees.FindAsync(id);
+		var managerId = await _context.Employees.FindAsync(updatedEmployee.ManagerId);
 
+		// return not found if the employee id doesnt exist
 		if (employee == null)
 		{
 			return NotFound();
@@ -55,13 +59,15 @@ public class EmployeeController : ControllerBase
 		else
 		{
 			// update employee
-			employee.FirstName = updatedEmployee.FirstName;
-			employee.LastName = updatedEmployee.LastName;
-			employee.Email = updatedEmployee.Email;
-			//employee.Role = updatedEmployee.Role;
-			employee.Title = updatedEmployee.Title;
-			//employee.ManagerId = updatedEmployee.ManagerId;
+			if (!string.IsNullOrWhiteSpace(updatedEmployee.FirstName)) employee.FirstName = updatedEmployee.FirstName;
+			if (!string.IsNullOrWhiteSpace(updatedEmployee.LastName)) employee.LastName = updatedEmployee.LastName;
+			if (!string.IsNullOrWhiteSpace(updatedEmployee.Email)) employee.Email = updatedEmployee.Email;
+			if (!string.IsNullOrWhiteSpace(updatedEmployee.Title)) employee.Title = updatedEmployee.Title;
 
+			if (managerId != null) employee.ManagerId = updatedEmployee.ManagerId;
+
+			employee.Role = (EmployeeRole)updatedEmployee.Role;
+			employee.Status = (EmployeeStatus)updatedEmployee.Status;
 
 			// save and return NoContent
 			await _context.SaveChangesAsync();

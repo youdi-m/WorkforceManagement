@@ -1,10 +1,10 @@
 interface StatusIndicator {
-	status: string
+	status: number
 }
 
 function StatusDisplay({status}: StatusIndicator) {
-	function setColor(s: string) {
-		if(s =='0') return '#00ff00'
+	function setColor(s: number) {
+		if(s ==0) return '#00ff00'
 		return '#ff0000'
 	}
 

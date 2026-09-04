@@ -181,6 +181,7 @@ a {
 }
 
 .employeeInformation input {
+	margin-left: auto;
 	background-color: transparent;
 	border: 1px solid black;
 }
