@@ -13,5 +13,8 @@ public class Employee
 	public Employee? Manager {get; set;}
 	public EmployeeStatus Status {get; set;} = EmployeeStatus.Active;
 	public EmployeeRole Role {get; set;} = EmployeeRole.employee;
-	
+	public required TimeOnly ShiftStartTime {get; set;}
+	public required TimeOnly ShiftEndTime {get; set;}
+	public required DateOnly DateOfBirth {get; set;}
+
 }

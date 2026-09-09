@@ -9,4 +9,8 @@ public class UpdateEmployee
 	public string? Title {get; set;} 
 	public int ManagerId {get; set;} 
 	public int Status {get; set;} 
+	public string? ShiftStartTime {get; set;}
+	public string? ShiftEndTime {get; set;}
+	public string? DateOfBirth {get; set;}
+
 }

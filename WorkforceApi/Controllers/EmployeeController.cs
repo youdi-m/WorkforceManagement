@@ -69,6 +69,10 @@ public class EmployeeController : ControllerBase
 			employee.Role = (EmployeeRole)updatedEmployee.Role;
 			employee.Status = (EmployeeStatus)updatedEmployee.Status;
 
+			employee.ShiftStartTime = TimeOnly.Parse(updatedEmployee.ShiftStartTime);
+			employee.ShiftEndTime = TimeOnly.Parse(updatedEmployee.ShiftEndTime);
+			employee.DateOfBirth = DateOnly.Parse(updatedEmployee.DateOfBirth);
+
 			// save and return NoContent
 			await _context.SaveChangesAsync();
 			return NoContent();

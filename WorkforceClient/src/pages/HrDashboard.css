@@ -31,6 +31,7 @@ html, body {
 	justify-content: flex-start;
 
 	margin-top: 6px;
+	gap: 20px;
 }
 
 .navContainerRight {
@@ -57,19 +58,29 @@ a {
 	border-bottom: 2px solid transparent;
 }
 
-.displayContainer {
-	width: 100%;
+
+.displayContainer{
 	height: 95%;
 
+	margin-top: 3%;
+}
+
+.toolBarContainer {
+	height: 100px;
+	
+	margin-bottom: 1%;
+	margin-left: 20px;
+	margin-right: 20px;
+
+	background-color: red;
 }
 
 .employeeContainer {
 	gap: 20px;
-	margin-top: 10%;
+
+	border-radius: 5px;
 	margin-left: 20px;
 	margin-right: 20px;
-	border-radius: 5px;
-
 	color: #08060d;
 }
 

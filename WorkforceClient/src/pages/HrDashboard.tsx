@@ -14,6 +14,14 @@ interface EmployeeType {
 	title: string
 	managerId: number
 	status: number
+	shiftStart: string
+	shiftEnd: string
+	dateOfBirth: string
+}
+
+interface EnumType {
+	value: number;
+	label: string;
 }
 
 function HrDashboard() {
@@ -23,6 +31,9 @@ function HrDashboard() {
 	const [employee, setEmployees] = useState<EmployeeType[]>([])
 	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeType | null>(null)
 
+	const [roles, setRoles] = useState<EnumType[]>([])
+	const [statuses, setStatuses] = useState<EnumType[]>([])
+
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
 	const [email, setEmail] = useState('')
@@ -30,10 +41,15 @@ function HrDashboard() {
 	const [title, setTitle] = useState('')
 	const [managerId, setManagerId] = useState('')
 	const [status, setStatus] = useState('')
+	const [shiftStart, setshiftStart] = useState('')
+	const [shiftEnd, setshiftEnd] = useState('')
+	const [dateOfBrith, setdateOfBirth] = useState('')
 
 	// populate dashboard with employees on first render
 	useEffect(() => {
-		showEmployees()
+		showEmployees();
+		fetchRoles();
+
 	}, [])
 
 	// GET request to show employees on the dashboard
@@ -54,6 +70,22 @@ function HrDashboard() {
 		}
 	}
 
+	async function fetchRoles() {
+
+		const response = await fetch('http://localhost:5016/api/employeerole', {
+			method: 'GET',
+			headers: {'Authorization': `Bearer ${token}`},
+		})
+
+		if(response.ok) {
+			const data = await response.json()
+			setRoles(data)
+		}
+		else {
+			console.log('Failed to fetch roles')
+		}
+	}
+
 	// PUT request to update employee
 	async function updateEmployee() {
 
@@ -62,8 +94,9 @@ function HrDashboard() {
 			const response = await fetch(`http://localhost:5016/api/employee/update/${selectedEmployee.id}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-				body: JSON.stringify({firstName: firstName, lastName: lastName, email: email,
-															role: Number(role), title: title, managerId: Number(managerId), status: Number(status)
+				body: JSON.stringify({firstName: firstName, lastName: lastName, email: email, role: Number(role),
+															title: title, managerId: Number(managerId), status: Number(status),
+															shiftStart: shiftStart, shiftEnd: shiftEnd, dateOfBrith: dateOfBrith
 				})
 			})
 
@@ -74,7 +107,6 @@ function HrDashboard() {
 			else
 			{
 				console.log('error updating employee')
-				
 			}
 		}
 	}
@@ -84,6 +116,9 @@ function HrDashboard() {
 			<div className='navContainer'>
 				<div className='navContainerLeft'>
 					<a>HR Dashboard</a>
+					<a>Payroll</a>
+					<a>Compliance</a>
+					<a>Time off</a>
 				</div>
 				<div className='navContainerRight'>
 					<a>About</a>
@@ -91,6 +126,9 @@ function HrDashboard() {
 				</div>
 			</div>
 			<div className='displayContainer'>
+				<div className="toolBarContainer">
+					<button>Onboarding</button>
+				</div>
 				<div className='employeeContainer'>
 					{employee.map(emp => (
 						<div onClick={() => setSelectedEmployee(emp)} className='employeeRow' key={emp.id}>
@@ -102,6 +140,10 @@ function HrDashboard() {
 							<div><RoleDisplay role={emp.role}/></div>
 							<div>{emp.title}</div>
 							<div>{emp.managerId}</div>
+							<div>{emp.shiftStart}</div>
+							<div>{emp.shiftEnd}</div>
+							<div>{emp.dateOfBirth}</div>
+
 						</div>
 					))}
 				</div>
@@ -120,14 +162,21 @@ function HrDashboard() {
 
 							<div>Email<input onChange={e => setEmail(e.target.value)}></input></div>
 
-							<div>Role<input onChange={e => setRole(e.target.value)}></input></div>
+							<div>Role<select onChange={e => setRole(e.target.value)}>
+												<option value={selectedEmployee.status}></option>	
+											 </select></div>
 
 							<div>Title<input onChange={e => setTitle(e.target.value)}></input></div>
 
 							<div>Manager<input onChange={e => setManagerId(e.target.value)}></input></div>
 
-							<div>Status<input onChange={e => setStatus(e.target.value)}></input></div>
+							<div>Shift Start<input type="Time" onChange={e => setshiftStart(e.target.value)}></input></div>
 
+							<div>Shift End<input type="Time" onChange={e => setshiftEnd(e.target.value)}></input></div>
+
+							<div>Date of Birth<input type="Date" onChange={e => setdateOfBirth(e.target.value)}></input></div>
+
+							<div>Status<input onChange={e => setStatus(e.target.value)}></input></div>
 
 						</div>
 						<button onClick={updateEmployee}>submit</button>
