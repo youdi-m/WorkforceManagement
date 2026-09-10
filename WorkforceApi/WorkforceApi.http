@@ -1,2 +1,1 @@
-// create admin account
-GET http://localhost:5016/api/employee
+POST http://localhost:5016/api/auth/create-admin

@@ -25,7 +25,22 @@ public class EmployeeController : ControllerBase
 	[HttpGet]
 	public async Task<IActionResult> GetEmployees()
 	{
-		var employees = await _context.Employees.ToListAsync();
+		var employees = await _context.Employees
+		.Select(e => new EmployeeResponse
+		{
+			Id = e.Id,
+			FirstName = e.FirstName,
+			LastName = e.LastName,
+			Email = e.Email,
+			Role = (int)e.Role,
+			Title = e.Title,
+			ManagerId = e.ManagerId,
+			Status = (int)e.Status,
+			ShiftStartTime = e.ShiftStartTime,
+			ShiftEndTime = e.ShiftEndTime,
+			DateOfBirth = e.DateOfBirth,
+		})
+		.ToListAsync();
 		return Ok(employees);
 	}
 
