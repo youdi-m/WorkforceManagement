@@ -1,6 +1,20 @@
 html, body {
-	width: 100%;
-	height: 100%;
+	display: flex;
+
+	justify-content: center;
+	align-items: center;
+
+}
+
+body {
+	width: 96%;
+
+	background-color: red;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
 }
 
 .mainContainer {
@@ -9,6 +23,7 @@ html, body {
 	
 	display: flex;
 	flex-direction: column;
+
 }
 
 .navContainer {
@@ -17,47 +32,27 @@ html, body {
 
 	display: flex;
 	flex-direction: row;
+
 	align-items: center;
 	justify-content: center;
 }
 
-.navContainerLeft {
-	width: 50%;
-	height: 100%;
-
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
-
-	margin-top: 6px;
-	gap: 20px;
-}
-
+.navContainerLeft,
 .navContainerRight {
 	width: 50%;
 	height: 100%;
 
 	display: flex;
 	flex-direction: row;
-	align-items: center;
-	justify-content: flex-end;
 
 	gap: 20px;
 }
 
-.navContainerRight a:hover {
-	border-bottom: 3px solid #9ca3af;
+.navContainerLeft a:hover,
+.navContainerRight a:hover,
+.toolsContainer a:hover {
+	font-weight: 800;
 }
-
-a {
-	cursor: pointer;
-	font-weight: 700;
-	padding-top: 10px;
-	padding-bottom: 4px;
-	border-bottom: 2px solid transparent;
-}
-
 
 .displayContainer{
 	height: 95%;
@@ -65,43 +60,33 @@ a {
 	margin-top: 3%;
 }
 
-.toolBarContainer {
-	height: 100px;
-	
-	margin-bottom: 1%;
-	margin-left: 20px;
-	margin-right: 20px;
+.toolsContainer {
+	width: 100%;
 
-	background-color: red;
+	display: flex;
+	float: left;
+
+	gap: 20px;
+	margin-left: 40px;
+
 }
 
 .employeeContainer {
-	gap: 20px;
-
-	border-radius: 5px;
 	margin-left: 20px;
 	margin-right: 20px;
 	color: #08060d;
 }
 
-.employeeRow {
-	display: grid;
-	grid-auto-flow: column;
-	grid-template-columns: auto auto auto;
+.employeeTable{
+	display: table;
+	width: 100%;
 
-	justify-content: start;
+	justify-content: center;
 	align-items: center;
 
-	margin-bottom: 3px;
-
-	border: #08060d 1px solid;
 	border-radius: 7px;
 
 	background-color: #9ca3af;
-}
-
-.employeeRow:hover {
-	background-color: #b1b8c5;
 }
 
 .employeeRow div {
@@ -114,6 +99,10 @@ a {
 	justify-content: center;
 
 	font-weight: bold;
+}
+
+.employeeRow:hover {
+	background-color: #b1b8c5;
 }
 
 #statusDiv {
@@ -147,15 +136,14 @@ a {
 	width: 1200px;
 	height: 700px;
 
-	display: block;
-	position: absolute;
+	position: fixed;
+	top: 10%;
+	left: 20%;
 
-	margin-top: 550px;
 	border-radius: 7px;
 
 	color: #08060d;
 	background-color: #b1b8c5;
-
 }
 
 .informationHeader {

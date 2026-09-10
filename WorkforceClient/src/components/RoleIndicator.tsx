@@ -11,6 +11,8 @@ function RoleDisplay({role}: RoleIndicator) {
 			return 'Lead'
 		case 2:
 			return 'HR'
+		case 3:
+			return 'Owner'
 		default:
 			return 'Unknown'
 	}

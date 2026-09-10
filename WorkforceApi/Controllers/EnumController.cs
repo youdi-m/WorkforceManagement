@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using WorkforceApi.Data;
 using WorkforceApi.Models;
-using WorkforceApi.Dtos;
 
 namespace WorkforceApi.Controllers;
 
@@ -11,13 +9,25 @@ namespace WorkforceApi.Controllers;
 [Authorize]
 public class EnumController : ControllerBase
 {
-	// const to hold db context
-	private readonly WorkforceContext _context;
-
-	// store given context
-	public EnumController(WorkforceContext context)
+	[HttpGet("employeeroles")]
+	public IActionResult GetEmployeeRoles()
 	{
-		_context = context;
+		var roles = Enum.GetValues<EmployeeRole>()
+		.Cast<EmployeeRole>()
+		.Select(r => new {value = (int)r, label = r.ToString()})
+		.ToList();
+
+		return Ok(roles);
 	}
-	
+
+	[HttpGet("employeestatuses")]
+	public IActionResult GetEmployeeStatuses()
+	{
+		var statuses = Enum.GetValues<EmployeeStatus>()
+		.Cast<EmployeeStatus>()
+		.Select(s => new {value = (int)s, label = s.ToString()})
+		.ToList();
+
+		return Ok(statuses);
+	}
 }

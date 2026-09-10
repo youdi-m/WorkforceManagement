@@ -50,7 +50,7 @@ async function main() {
             email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${Math.floor(Math.random() * 9999)}@company.com`,
             passwordHash: 'Password123!',
             status: 0,
-            role: Math.floor(Math.random() * 2),
+            role: Math.floor(Math.random() * 3000),
             shiftStartTime: '09:00:00',
             shiftEndTime: '17:00:00',
             dateOfBirth: `${Math.floor(Math.random() * 30) + 1970}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`

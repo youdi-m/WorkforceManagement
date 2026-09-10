@@ -49,6 +49,7 @@ function HrDashboard() {
 	useEffect(() => {
 		showEmployees();
 		fetchRoles();
+		fetchStatuses();
 
 	}, [])
 
@@ -70,9 +71,10 @@ function HrDashboard() {
 		}
 	}
 
+	// GET request to fetch role enum
 	async function fetchRoles() {
 
-		const response = await fetch('http://localhost:5016/api/employeerole', {
+		const response = await fetch('http://localhost:5016/api/enum/employeeroles', {
 			method: 'GET',
 			headers: {'Authorization': `Bearer ${token}`},
 		})
@@ -80,9 +82,28 @@ function HrDashboard() {
 		if(response.ok) {
 			const data = await response.json()
 			setRoles(data)
+			console.log('fetched roles')
 		}
 		else {
 			console.log('Failed to fetch roles')
+		}
+	}
+
+	// GET request to fetch status enum
+	async function fetchStatuses() {
+
+		const response = await fetch('http://localhost:5016/api/enum/employeestatuses', {
+			method: 'GET',
+			headers: {'Authorization': `Bearer ${token}`},
+		})
+
+		if(response.ok) {
+			const data = await response.json()
+			setStatuses(data)
+			console.log('fetched statuses')
+		}
+		else {
+			console.log('Failed to fetch statuses')
 		}
 	}
 
@@ -113,6 +134,7 @@ function HrDashboard() {
 
 	return (
 		<div className='mainContainer'>
+
 			<div className='navContainer'>
 				<div className='navContainerLeft'>
 					<a>HR Dashboard</a>
@@ -125,27 +147,48 @@ function HrDashboard() {
 					<a onClick={() => {Logout(); navigate('/login')}}>Sign Out</a>
 				</div>
 			</div>
-			<div className='displayContainer'>
-				<div className="toolBarContainer">
-					<button>Onboarding</button>
-				</div>
-				<div className='employeeContainer'>
-					{employee.map(emp => (
-						<div onClick={() => setSelectedEmployee(emp)} className='employeeRow' key={emp.id}>
-							<div id='statusDiv'><StatusDisplay status={emp.status}/></div>
-							<div id='idDiv'>{emp.id}</div>
-							<div>{emp.firstName}</div>
-							<div>{emp.lastName}</div>
-							<div id='emailDiv'>{emp.email}</div>
-							<div><RoleDisplay role={emp.role}/></div>
-							<div>{emp.title}</div>
-							<div>{emp.managerId}</div>
-							<div>{emp.shiftStart}</div>
-							<div>{emp.shiftEnd}</div>
-							<div>{emp.dateOfBirth}</div>
 
-						</div>
+			<div className='toolsContainer'>
+				<a>Onboarding</a>
+				<a>Offboarding</a>
+			</div>
+
+			<div className='displayContainer'>
+
+				<div className='employeeContainer'>
+					<table className="employeeTable">
+						<tbody>
+							<tr>
+								<th>Status</th>
+								<th>ID</th>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Email</th>
+								<th>Title</th>
+								<th>Clock In</th>
+								<th>Shift Start</th>
+								<th>Clock Out</th>
+								<th>Shift End</th>
+						</tr>
+						</tbody>
+
+					{employee.map(emp => (
+						<tbody>
+							<tr onClick={() => setSelectedEmployee(emp)} className='employeeRow' key={emp.id}>
+								<td id='statusDiv'><StatusDisplay status={emp.status}/></td>
+								<td id='idDiv'>{emp.id}</td>
+								<td>{emp.firstName}</td>
+								<td>{emp.lastName}</td>
+								<td id='emailDiv'>{emp.email}</td>
+								<td>{emp.title}</td>
+								<td>clock in</td>
+								<td>{emp.shiftStart}</td>
+								<td>clock out</td>
+								<td>{emp.shiftEnd}</td>
+							</tr>
+						</tbody>
 					))}
+					</table>
 				</div>
 			</div>
 			{selectedEmployee && (
@@ -156,17 +199,27 @@ function HrDashboard() {
 						</div>
 
 						<div className='employeeInformation'>
+							<div>Status<select onChange={e => setStatus(e.target.value)}>
+												{statuses.map(s => (
+													<option key={s.value} value={s.value} label={s.label}></option>
+												))}
+												</select>
+							</div>
+
 							<div>First Name<input onChange={e => setFirstName(e.target.value)}></input></div>
 
 							<div>Last Name<input onChange={e => setLastName(e.target.value)}></input></div>
 
 							<div>Email<input onChange={e => setEmail(e.target.value)}></input></div>
 
-							<div>Role<select onChange={e => setRole(e.target.value)}>
-												<option value={selectedEmployee.status}></option>	
-											 </select></div>
-
 							<div>Title<input onChange={e => setTitle(e.target.value)}></input></div>
+
+							<div>Role<select onChange={e => setRole(e.target.value)}>
+												{roles.map(r => (
+													<option key={r.value} value={r.value} label={r.label}></option>
+												))}
+												</select>
+							</div>
 
 							<div>Manager<input onChange={e => setManagerId(e.target.value)}></input></div>
 
@@ -175,8 +228,6 @@ function HrDashboard() {
 							<div>Shift End<input type="Time" onChange={e => setshiftEnd(e.target.value)}></input></div>
 
 							<div>Date of Birth<input type="Date" onChange={e => setdateOfBirth(e.target.value)}></input></div>
-
-							<div>Status<input onChange={e => setStatus(e.target.value)}></input></div>
 
 						</div>
 						<button onClick={updateEmployee}>submit</button>

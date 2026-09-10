@@ -61,7 +61,9 @@ public class EmployeeController : ControllerBase
 	
 	public async Task<IActionResult> UpdateEmployee(int id, UpdateEmployee updatedEmployee)
 	{
+		Console.WriteLine("**************HERE**************" + System.Text.Json.JsonSerializer.Serialize(updatedEmployee));
 		if (!ModelState.IsValid) return BadRequest(ModelState);
+
 		// look for employee, return 404 if not found
 		var employee = await _context.Employees.FindAsync(id);
 		var managerId = await _context.Employees.FindAsync(updatedEmployee.ManagerId);
@@ -80,13 +82,12 @@ public class EmployeeController : ControllerBase
 			if (!string.IsNullOrWhiteSpace(updatedEmployee.Title)) employee.Title = updatedEmployee.Title;
 
 			if (managerId != null) employee.ManagerId = updatedEmployee.ManagerId;
+			if (updatedEmployee.Role != null) employee.Role = (EmployeeRole)updatedEmployee.Role;
+			if (updatedEmployee.Status != null) employee.Status = (EmployeeStatus)updatedEmployee.Status;
 
-			employee.Role = (EmployeeRole)updatedEmployee.Role;
-			employee.Status = (EmployeeStatus)updatedEmployee.Status;
-
-			employee.ShiftStartTime = TimeOnly.Parse(updatedEmployee.ShiftStartTime);
-			employee.ShiftEndTime = TimeOnly.Parse(updatedEmployee.ShiftEndTime);
-			employee.DateOfBirth = DateOnly.Parse(updatedEmployee.DateOfBirth);
+			if(updatedEmployee.ShiftStartTime != null) employee.ShiftStartTime = TimeOnly.Parse(updatedEmployee.ShiftStartTime);
+			if(updatedEmployee.ShiftEndTime != null)employee.ShiftEndTime = TimeOnly.Parse(updatedEmployee.ShiftEndTime);
+			if(updatedEmployee.DateOfBirth != null)employee.DateOfBirth = DateOnly.Parse(updatedEmployee.DateOfBirth);
 
 			// save and return NoContent
 			await _context.SaveChangesAsync();
