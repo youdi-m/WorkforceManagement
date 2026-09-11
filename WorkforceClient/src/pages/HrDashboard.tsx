@@ -20,13 +20,13 @@ interface EmployeeType {
 }
 
 interface EnumType {
-	value: number;
-	label: string;
+	value: number
+	label: string
 }
 
 function HrDashboard() {
 
-	const navigate = useNavigate();
+	const navigate = useNavigate()
 	const {token, Logout} = useAuth()
 	const [employee, setEmployees] = useState<EmployeeType[]>([])
 	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeType | null>(null)
@@ -47,9 +47,9 @@ function HrDashboard() {
 
 	// populate dashboard with employees on first render
 	useEffect(() => {
-		showEmployees();
-		fetchRoles();
-		fetchStatuses();
+		showEmployees()
+		fetchRoles()
+		fetchStatuses()
 
 	}, [])
 
@@ -158,13 +158,11 @@ function HrDashboard() {
 				<div className='employeeContainer'>
 					<table className="employeeTable">
 						<tbody>
-							<tr>
-								<th>Status</th>
+							<tr className="tableHeader">
 								<th>ID</th>
 								<th>First Name</th>
 								<th>Last Name</th>
 								<th>Email</th>
-								<th>Title</th>
 								<th>Clock In</th>
 								<th>Shift Start</th>
 								<th>Clock Out</th>
@@ -173,24 +171,29 @@ function HrDashboard() {
 						</tbody>
 
 					{employee.map(emp => (
-						<tbody>
-							<tr onClick={() => setSelectedEmployee(emp)} className='employeeRow' key={emp.id}>
-								<td id='statusDiv'><StatusDisplay status={emp.status}/></td>
-								<td id='idDiv'>{emp.id}</td>
-								<td>{emp.firstName}</td>
-								<td>{emp.lastName}</td>
-								<td id='emailDiv'>{emp.email}</td>
-								<td>{emp.title}</td>
-								<td>clock in</td>
-								<td>{emp.shiftStart}</td>
-								<td>clock out</td>
-								<td>{emp.shiftEnd}</td>
-							</tr>
-						</tbody>
+							<tbody>
+								<tr onClick={() => setSelectedEmployee(emp)} className='employeeRow' key={emp.id}>
+										<td>{emp.id}</td>
+										<td>{emp.firstName}</td>
+										<td>{emp.lastName}</td>
+										<td>{emp.email}</td>
+										<td>-</td>
+										<td>{emp.shiftStart}</td>
+										<td>-</td>
+										<td>{emp.shiftEnd}</td>
+								</tr>
+							</tbody>
 					))}
 					</table>
 				</div>
+
+				{/*TODO: create drop downs for different actions (update employee, check compliance, begin offboarding, etc...)*/}
+				<div className="employeeInformationContainer2">
+					<div>Employee Information</div>
+
+				</div>
 			</div>
+
 			{selectedEmployee && (
 				<div className='employeeInformationContainer'>
 						<div className='informationHeader'>
