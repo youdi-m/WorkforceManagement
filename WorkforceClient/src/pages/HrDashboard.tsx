@@ -138,8 +138,8 @@ function HrDashboard() {
 			<div className='navContainer'>
 				<div className='navContainerLeft'>
 					<a>HR Dashboard</a>
-					<a>Payroll</a>
 					<a>Compliance</a>
+					<a>Payroll</a>
 					<a>Time off</a>
 				</div>
 				<div className='navContainerRight'>
@@ -186,56 +186,7 @@ function HrDashboard() {
 					))}
 					</table>
 				</div>
-
-				{/*TODO: create drop downs for different actions (update employee, check compliance, begin offboarding, etc...)*/}
-				<div className="employeeInformationContainer2">
-					<div>Employee Information</div>
-
-				</div>
 			</div>
-
-			{selectedEmployee && (
-				<div className='employeeInformationContainer'>
-						<div className='informationHeader'>
-							<h2>{selectedEmployee.firstName} {selectedEmployee.lastName} {selectedEmployee.id}</h2>
-							<button id='empInformationCloseButton' onClick={() => setSelectedEmployee(null)}>X</button>
-						</div>
-
-						<div className='employeeInformation'>
-							<div>Status<select onChange={e => setStatus(e.target.value)}>
-												{statuses.map(s => (
-													<option key={s.value} value={s.value} label={s.label}></option>
-												))}
-												</select>
-							</div>
-
-							<div>First Name<input onChange={e => setFirstName(e.target.value)}></input></div>
-
-							<div>Last Name<input onChange={e => setLastName(e.target.value)}></input></div>
-
-							<div>Email<input onChange={e => setEmail(e.target.value)}></input></div>
-
-							<div>Title<input onChange={e => setTitle(e.target.value)}></input></div>
-
-							<div>Role<select onChange={e => setRole(e.target.value)}>
-												{roles.map(r => (
-													<option key={r.value} value={r.value} label={r.label}></option>
-												))}
-												</select>
-							</div>
-
-							<div>Manager<input onChange={e => setManagerId(e.target.value)}></input></div>
-
-							<div>Shift Start<input type="Time" onChange={e => setshiftStart(e.target.value)}></input></div>
-
-							<div>Shift End<input type="Time" onChange={e => setshiftEnd(e.target.value)}></input></div>
-
-							<div>Date of Birth<input type="Date" onChange={e => setdateOfBirth(e.target.value)}></input></div>
-
-						</div>
-						<button onClick={updateEmployee}>submit</button>
-				</div>
-			)}
 		</div>
 		)
 }

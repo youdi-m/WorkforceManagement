@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom'
+import {Route, Routes, Navigate} from 'react-router-dom'
 
 import EmployeeDashboard from './pages/EmployeeDashboard'
 import HrDashboard from './pages/HrDashboard'
@@ -11,9 +11,10 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/employee" element={<EmployeeDashboard />} />
-      <Route path="/lead" element={<LeadDashboard />} />
-      <Route path="/hr" element={<HrDashboard />} />
+      <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+      <Route path="/lead/dashboard" element={<LeadDashboard />} />
+      <Route path="/hr/dashboard" element={<HrDashboard />} />
+      <Route path="/owner/dashboard" element={<HrDashboard />} />
     </Routes>
   )
 }

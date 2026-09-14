@@ -38,15 +38,19 @@ function Login() {
 			// switch case to navigate depending on role
 			switch(data.role){
 				case 0: {
-					navigate('/employee')
+					navigate('/employee/dashboard')
 					break
 				}
 				case 1: {
-					navigate('/lead')
+					navigate('/lead/dashboard')
 					break
 				}
 				case 2: {
-					navigate('/hr')
+					navigate('/hr/dashboard')
+					break
+				}
+				case 3: {
+					navigate('/owner/dashboard')
 					break
 				}
 				// default for unknown role
