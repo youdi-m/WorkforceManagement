@@ -11,6 +11,8 @@ public class Employee
 	public required string Title {get; set;}
 	public required string Email {get; set;}
 	public required string PasswordHash {get; set;}
+	public required int CompanyId {get; set;}
+	public Company? Company {get; set;}
 	public int? ManagerId {get; set;}
 	public Employee? Manager {get; set;}
 	public EmployeeStatus Status {get; set;} = EmployeeStatus.Active;
@@ -19,7 +21,7 @@ public class Employee
 	public required DateTime HireDate {get; set;}
 	public DateTime? OffboardDate {get; set;}
 	public required int Wage {get; set;}
-	public ICollection<Shift> Shifts {get; set;}= new List<Shift>();
-	public ICollection<LeaveRequest> LeaveRequests {get; set;}= new List<LeaveRequest>();
+	public ICollection<Shift> Shifts {get; set;} = new List<Shift>();
+	public ICollection<LeaveRequest> LeaveRequests {get; set;} = new List<LeaveRequest>();
 
 }

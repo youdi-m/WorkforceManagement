@@ -36,8 +36,6 @@ public class EmployeeController : ControllerBase
 			Title = e.Title,
 			ManagerId = e.ManagerId,
 			Status = (int)e.Status,
-			ShiftStartTime = e.ShiftStartTime,
-			ShiftEndTime = e.ShiftEndTime,
 			DateOfBirth = e.DateOfBirth,
 		})
 		.ToListAsync();
@@ -85,8 +83,6 @@ public class EmployeeController : ControllerBase
 			if (updatedEmployee.Role != null) employee.Role = (EmployeeRole)updatedEmployee.Role;
 			if (updatedEmployee.Status != null) employee.Status = (EmployeeStatus)updatedEmployee.Status;
 
-			if(updatedEmployee.ShiftStartTime != null) employee.ShiftStartTime = TimeOnly.Parse(updatedEmployee.ShiftStartTime);
-			if(updatedEmployee.ShiftEndTime != null)employee.ShiftEndTime = TimeOnly.Parse(updatedEmployee.ShiftEndTime);
 			if(updatedEmployee.DateOfBirth != null)employee.DateOfBirth = DateOnly.Parse(updatedEmployee.DateOfBirth);
 
 			// save and return NoContent
