@@ -3258,19 +3258,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/youdi/.nuget/packages/": {}
+    "C:\\Users\\youssef.mehdi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/youdi/Documents/github/WorkforceManagement/WorkforceApi/WorkforceApi.csproj",
+      "projectUniqueName": "C:\\Users\\youssef.mehdi\\myFiles\\github\\WorkforceManagement\\WorkforceApi\\WorkforceApi.csproj",
       "projectName": "WorkforceApi",
-      "projectPath": "/Users/youdi/Documents/github/WorkforceManagement/WorkforceApi/WorkforceApi.csproj",
-      "packagesPath": "/Users/youdi/.nuget/packages/",
-      "outputPath": "/Users/youdi/Documents/github/WorkforceManagement/WorkforceApi/obj/",
+      "projectPath": "C:\\Users\\youssef.mehdi\\myFiles\\github\\WorkforceManagement\\WorkforceApi\\WorkforceApi.csproj",
+      "packagesPath": "C:\\Users\\youssef.mehdi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\youssef.mehdi\\myFiles\\github\\WorkforceManagement\\WorkforceApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/youdi/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\youssef.mehdi\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
@@ -3295,7 +3295,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.400"
+      "SdkAnalysisLevel": "10.0.300"
     },
     "frameworks": {
       "net10.0": {
@@ -3350,7 +3350,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.400/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.303/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

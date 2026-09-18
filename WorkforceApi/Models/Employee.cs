@@ -1,5 +1,3 @@
-using Microsoft.Identity.Client;
-
 namespace WorkforceApi.Models;
 
 // defining Employee table
