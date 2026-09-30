@@ -12,6 +12,7 @@ public class Address
 	public required string City {get; set;}
 	public required string PostalCode {get; set;}
 
+	// metadata
 	public bool IsPrimary {get; set;}
 	public bool IsCurrent {get; set;}
 	public DateOnly EffectiveFrom {get; set;}

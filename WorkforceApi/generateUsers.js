@@ -25,7 +25,7 @@ async function main() {
     const loginRes = await fetch('http://localhost:5016/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'admin@company.com', password: 'Elpasso-00112' })
+        body: JSON.stringify({ email: 'admin@company.com', password: 'Password123!' })
     });
 
     const loginData = await loginRes.json();
@@ -38,7 +38,7 @@ async function main() {
     console.log('Logged in!');
 
     // 2. Create 100 employees
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 200; i++) {
         const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
         const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
 
@@ -51,9 +51,8 @@ async function main() {
             passwordHash: 'Password123!',
             status: 0,
             role: Math.floor(Math.random() * 3000),
-            shiftStartTime: '09:00:00',
-            shiftEndTime: '17:00:00',
-            dateOfBirth: `${Math.floor(Math.random() * 30) + 1970}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`
+            dateOfBirth: `${Math.floor(Math.random() * 30) + 1980}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
+            companyId: Math.floor(Math.random() * 30)
         };
 
         const res = await fetch('http://localhost:5016/api/employee', {
@@ -66,10 +65,10 @@ async function main() {
         });
 
         if (res.ok) {
-            console.log(`✓ ${i + 1}/100: ${firstName} ${lastName}`);
+            console.log(`✓ ${i + 1}/200: ${firstName} ${lastName}`);
         } else {
             const err = await res.text();
-            console.log(`✗ ${i + 1}/100: ${firstName} ${lastName} - ${res.status}: ${err}`);
+            console.log(`✗ ${i + 1}/200: ${firstName} ${lastName} - ${res.status}: ${err}`);
         }
     }
     console.log('Done!');

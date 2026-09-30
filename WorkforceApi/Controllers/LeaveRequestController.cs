@@ -38,7 +38,7 @@ public class LeaveRequestController : ControllerBase
 
 		_context.LeaveRequests.Add(request);
 		await _context.SaveChangesAsync();
-		return CreatedAtAction(nameof(GetLeaveRequest), new { id = request.Id }, request);
+		return CreatedAtAction(nameof(GetLeaveRequest), new {id = request.Id}, request);
 	}
 	
 }

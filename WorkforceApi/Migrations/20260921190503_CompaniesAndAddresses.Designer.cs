@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkforceApi.Data;
 
@@ -11,9 +12,11 @@ using WorkforceApi.Data;
 namespace WorkforceApi.Migrations
 {
     [DbContext(typeof(WorkforceContext))]
-    partial class WorkforceContextModelSnapshot : ModelSnapshot
+    [Migration("20260921190503_CompaniesAndAddresses")]
+    partial class CompaniesAndAddresses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace WorkforceApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WorkforceApi.Models.Address", b =>
+            modelBuilder.Entity("WorkforceApi.Models.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,57 +34,10 @@ namespace WorkforceApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("EffectiveFrom")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly?>("EffectiveTo")
-                        .HasColumnType("date");
-
-                    b.Property<bool>("IsCurrent")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPrimary")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetLine1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetLine2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.ToTable("Address");
-                });
-
-            modelBuilder.Entity("WorkforceApi.Models.Company", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -112,6 +68,15 @@ namespace WorkforceApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxId")
@@ -184,7 +149,6 @@ namespace WorkforceApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Wage")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -352,17 +316,6 @@ namespace WorkforceApi.Migrations
                     b.ToTable("ShiftBreak");
                 });
 
-            modelBuilder.Entity("WorkforceApi.Models.Address", b =>
-                {
-                    b.HasOne("WorkforceApi.Models.Company", "Company")
-                        .WithMany("Addresses")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
             modelBuilder.Entity("WorkforceApi.Models.Employee", b =>
                 {
                     b.HasOne("WorkforceApi.Models.Company", "Company")
@@ -442,8 +395,6 @@ namespace WorkforceApi.Migrations
 
             modelBuilder.Entity("WorkforceApi.Models.Company", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("Employees");
                 });
 

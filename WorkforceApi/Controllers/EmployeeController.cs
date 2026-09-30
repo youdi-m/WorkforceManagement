@@ -43,6 +43,7 @@ public class EmployeeController : ControllerBase
 	}
 
 	// function to create a new employee
+	[AllowAnonymous]
 	[HttpPost]
 	public async Task<IActionResult> CreateEmployee(Employee employee)
 	{
