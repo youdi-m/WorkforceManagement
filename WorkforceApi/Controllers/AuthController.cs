@@ -33,11 +33,19 @@ public class AuthController : ControllerBase
 	[HttpPost("Register")]
 	public async Task<IActionResult> Register(RegisterRequest request)
 	{
-		var email = _context.Employees.FirstOrDefaultAsync(e => e.Email == request.Email);
-		if (email != null) {return Unauthorized("Email already registered");}
+		// verify if user and company exist
+		// also verify if an address is alreday registered
 
-		
+		var email = await _context.Employees.FirstOrDefaultAsync(e => e.Email == request.Email);
+		if (email != null) {return Conflict("Email already registered");}
 
+		var legalName = await _context.Companies.FirstOrDefaultAsync(e => e.LegalName == request.LegalName);
+		if (legalName != null) {return Conflict("Company already registered");}
+
+		var address = await _context.Addresses.FirstOrDefaultAsync(e => e.StreetLine1 == request.StreetLine1);
+		if (address != null) {return Conflict("Address already registered");}
+
+		// create the user and company, register the address
 
 		return Ok();
 	}

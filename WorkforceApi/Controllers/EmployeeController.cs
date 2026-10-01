@@ -21,7 +21,7 @@ public class EmployeeController : ControllerBase
 		_context = context;
 	}
 
-	// function to get all rows from the Employees table
+	// endpoint to get all rows from the Employees table
 	[HttpGet]
 	public async Task<IActionResult> GetEmployees()
 	{
@@ -43,7 +43,6 @@ public class EmployeeController : ControllerBase
 	}
 
 	// function to create a new employee
-	[AllowAnonymous]
 	[HttpPost]
 	public async Task<IActionResult> CreateEmployee(Employee employee)
 	{
@@ -60,7 +59,6 @@ public class EmployeeController : ControllerBase
 	
 	public async Task<IActionResult> UpdateEmployee(int id, UpdateEmployee updatedEmployee)
 	{
-		Console.WriteLine("**************HERE**************" + System.Text.Json.JsonSerializer.Serialize(updatedEmployee));
 		if (!ModelState.IsValid) return BadRequest(ModelState);
 
 		// look for employee, return 404 if not found

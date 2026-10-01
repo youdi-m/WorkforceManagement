@@ -14,5 +14,8 @@ public class WorkforceContext : DbContext
 	public DbSet<LeaveType> LeaveTypes{get; set;}
 	public DbSet<LeaveBalance> LeaveBalances{get; set;}
 	public DbSet<LeaveRequest> LeaveRequests{get; set;}
+	public DbSet<Company> Companies{get; set;}
+	public DbSet<Address> Addresses{get; set;}
+
 
 }
