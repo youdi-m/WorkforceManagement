@@ -36,5 +36,4 @@ public class CompanyController : ControllerBase
 		return Ok(companies);
 	}
 
-
 }

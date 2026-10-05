@@ -9,7 +9,7 @@ namespace WorkforceApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "HR")]
 public class EmployeeController : ControllerBase
 {
 	// const to hold db context
@@ -33,25 +33,11 @@ public class EmployeeController : ControllerBase
 			LastName = e.LastName,
 			Email = e.Email,
 			Role = (int)e.Role,
-			Title = e.Title,
 			ManagerId = e.ManagerId,
 			Status = (int)e.Status,
-			DateOfBirth = e.DateOfBirth,
 		})
 		.ToListAsync();
 		return Ok(employees);
-	}
-
-	// function to create a new employee
-	[HttpPost]
-	public async Task<IActionResult> CreateEmployee(Employee employee)
-	{
-		// hashing password before storing in db
-		employee.PasswordHash = BCrypt.Net.BCrypt.HashPassword(employee.PasswordHash);
-		
-		_context.Employees.Add(employee);
-		await _context.SaveChangesAsync();
-		return CreatedAtAction(nameof(GetEmployees), new {id = employee.Id}, employee);
 	}
 
 	// function to update an employee

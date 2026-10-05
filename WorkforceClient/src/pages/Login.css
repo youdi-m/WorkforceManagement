@@ -14,7 +14,7 @@
   height: auto;
   padding: 40px;
 	margin-top: 10%;
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -28,16 +28,24 @@
 	transform: translateY(50px);
 }
 
-.loginContainer.visible {
+.loginContainer Form {
+	opacity: 0;
+}
+
+.loginContainer.visible,
+.loginForm.visible,
+.signUpForm.visible {
+	display: flex;
 	opacity: 1;
 	transform: translateY(0px);
 }
 
-.loginForm {
+.loginForm,
+.signUpForm {
 	width: 90%;
 	height: 100%;
 
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -46,7 +54,7 @@
 	font-size: 35px;
 }
 
-.loginForm input {
+.loginContainer input {
   padding: 12px;
   border: 1px solid #444;
   border-radius: 6px;
@@ -55,7 +63,7 @@
   font-size: 15px;
 }
 
-.loginForm button {
+.loginContainer button {
   padding: 12px;
   border: none;
   border-radius: 6px;
@@ -65,12 +73,12 @@
   cursor: pointer;
 }
 
-.loginForm input,
-.loginForm button {
+.loginContainer input,
+.loginContainer button {
   box-sizing: border-box;
   width: 70%;
 }
 
-.loginForm button:hover {
+.loginContainer button:hover {
   background-color: #4338ca;
 }

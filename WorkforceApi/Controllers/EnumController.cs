@@ -9,6 +9,7 @@ namespace WorkforceApi.Controllers;
 [Authorize]
 public class EnumController : ControllerBase
 {
+	// endpoint to retrieve roles
 	[HttpGet("employeeroles")]
 	public IActionResult GetEmployeeRoles()
 	{
@@ -20,6 +21,7 @@ public class EnumController : ControllerBase
 		return Ok(roles);
 	}
 
+	// enpoint to retreive statuses
 	[HttpGet("employeestatuses")]
 	public IActionResult GetEmployeeStatuses()
 	{

@@ -29,7 +29,7 @@ public class AuthController : ControllerBase
 		_config = config;
 	}
 
-	// endpoint to register a new user
+	// endpoint to register a new user with a company and address
 	[HttpPost("Register")]
 	public async Task<IActionResult> Register(RegisterRequest request)
 	{
@@ -42,48 +42,65 @@ public class AuthController : ControllerBase
 																																	c.LegalName == request.LegalName);
 		if (companyExists != null) {return Conflict("Company already registered");}
 
-		// create company
-		var company = new Company
+		// begin DB transaction
+		using var transaction = await _context.Database.BeginTransactionAsync();
+
+		try
 		{
-			Name = request.Name,
-			LegalName = request.LegalName,
-			TaxId = request.TaxId,
-			TimeZone = request.TimeZone,
-			Currency = request.Currency,
-		};
+			// create company
+			var company = new Company
+			{
+				Name = request.Name,
+				LegalName = request.LegalName,
+				TaxId = request.TaxId,
+				TimeZone = request.TimeZone,
+				Currency = request.Currency,
+			};
 
-		// save company to db
-		_context.Companies.Add(company);
-		await _context.SaveChangesAsync();
+			// save company to db
+			_context.Companies.Add(company);
+			await _context.SaveChangesAsync();
 
-		// create employee
-		var employee = new Employee
+			// create employee
+			var employee = new Employee
+			{
+				FirstName = request.FirstName,
+				LastName = request.LastName,
+				Email = request.Email,
+				PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+				Role = EmployeeRole.HR,
+				Wage = request.Wage,
+				CompanyId = company.Id,
+				HireDate = DateTime.UtcNow,
+			};
+
+			// create address
+			var address = new Address
+			{
+				StreetLine1 = request.StreetLine1,
+				StreetLine2 = request.StreetLine2,
+				Country = request.Country,
+				Province = request.Province,
+				City = request.City,
+				PostalCode = request.PostalCode,
+				CompanyId = company.Id,
+				IsPrimary = true,
+				IsCurrent = true,
+			};
+
+			// save employee and address to db
+			_context.Employees.Add(employee);
+			_context.Addresses.Add(address);
+			await _context.SaveChangesAsync();
+			
+			// commit transaction
+			await transaction.CommitAsync();
+		}
+		catch
 		{
-			FirstName = request.FirstName,
-			LastName = request.LastName,
-			Email = request.Email,
-			PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-			Wage = request.Wage,
-			CompanyId = company.Id,
-			HireDate = DateTime.UtcNow,
-		};
-
-		// create address
-		var address = new Address
-		{
-			StreetLine1 = request.StreetLine1,
-			StreetLine2 = request.StreetLine2,
-			Country = request.Country,
-			Province = request.Province,
-			City = request.City,
-			PostalCode = request.PostalCode,
-			CompanyId = company.Id
-		};
-
-		// save employee and address to db
-		_context.Employees.Add(employee);
-		_context.Addresses.Add(address);
-		await _context.SaveChangesAsync();
+			// return status 500 if the DB transaction failed and discard changes
+			return StatusCode(500, "Registration Failed");
+		}
 
 		// return OK
 		return Ok("Registration successful");

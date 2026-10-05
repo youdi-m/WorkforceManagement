@@ -10,12 +10,17 @@ function Login() {
 	// deconstructing userAuth to grab the setRole and setToken funtions
 	const {setRole, setToken} = useAuth()
 
-	// email and password getter/setters
+	// getters and setters to login
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
+	// getters and setters to register a new account
+
+
 	// const to show and hide the login container
-	const [showLogin, setShowLogin] = useState(false);
+	const [showLoginDiv, setShowLoginDiv] = useState(false);
+	const [showLoginForm, setShowLoginForm] = useState(false);
+	const [showSignUpForm, setShowSignUpForm] = useState(false);
 
 	// sending POST request and routing appropriately
 	const handleLogin = async () => {
@@ -75,20 +80,33 @@ function Login() {
 				</div>
 				<div className='navContainerRight'>
 					<a>About</a>
-					<a onClick={() => setShowLogin(true)}>Sign In</a>
+					<a onClick={() => {setShowLoginDiv(true); setShowLoginForm(true);}}>Sign In</a>
 				</div>
 			</div>
 
-			<div className={showLogin ? 'loginContainer visible' : 'loginContainer'}>
-				<form className='loginForm'>
-					<h3>TeamForge Login</h3>
+			<div className={showLoginDiv ? 'loginContainer visible' : 'loginContainer'}>
+				<form className={showLoginForm ? 'loginForm visible' : 'loginForm'}>
+					<h3>TeamForge Sign In</h3>
 					<input type="text" placeholder="email"
 						value={email} onChange={e => setEmail(e.target.value)} />
 					<input type="password" placeholder="password"
 						value={password} onChange={e => setPassword(e.target.value)} />
 					<button type="button" onClick={handleLogin}>Login</button>
+					<button className="signUpButton" type="button"onClick={() => {setShowLoginForm(false);
+																																				setShowSignUpForm(true);}}>Sign up</button>
+				</form>
+
+				<form className={showSignUpForm ? 'signUpForm visible' : 'signUpForm'}>
+					<h3>TeamForge Sign Up</h3>
+					<input type="text" placeholder="First Name"
+						value={email} onChange={e => setEmail(e.target.value)} />
+					<input type="password" placeholder="password"
+						value={password} onChange={e => setPassword(e.target.value)} />
+					<button type="button" onClick={handleLogin}>Login</button>
+					<button type="button" onClick={() => {setShowLoginForm(true); setShowSignUpForm(false);}}>Sign In</button>
 				</form>
 			</div>
+
 		</div>
 	)
 }
