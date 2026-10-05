@@ -7,12 +7,12 @@ public class Employee
 	public int Id {get; set;}
 	public required string FirstName {get; set;}
 	public required string LastName {get; set;}
-	public required string Title {get; set;}
+	public string? Title {get; set;}
 	public EmployeeRole Role {get; set;} = EmployeeRole.Employee;
 	public required string Email {get; set;}
 	public string? PhoneNumber {get; set;}
 	public required string PasswordHash {get; set;}
-	public required DateOnly DateOfBirth {get; set;}
+	public DateOnly? DateOfBirth {get; set;}
 
 	// shift
 	[Precision (18, 2)]

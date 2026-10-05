@@ -34,20 +34,59 @@ public class AuthController : ControllerBase
 	public async Task<IActionResult> Register(RegisterRequest request)
 	{
 		// verify if user and company exist
-		// also verify if an address is alreday registered
 
 		var email = await _context.Employees.FirstOrDefaultAsync(e => e.Email == request.Email);
 		if (email != null) {return Conflict("Email already registered");}
 
-		var legalName = await _context.Companies.FirstOrDefaultAsync(e => e.LegalName == request.LegalName);
-		if (legalName != null) {return Conflict("Company already registered");}
+		var companyExists = await _context.Companies.FirstOrDefaultAsync(c => c.TaxId == request.TaxId &&
+																																	c.LegalName == request.LegalName);
+		if (companyExists != null) {return Conflict("Company already registered");}
 
-		var address = await _context.Addresses.FirstOrDefaultAsync(e => e.StreetLine1 == request.StreetLine1);
-		if (address != null) {return Conflict("Address already registered");}
+		// create company
+		var company = new Company
+		{
+			Name = request.Name,
+			LegalName = request.LegalName,
+			TaxId = request.TaxId,
+			TimeZone = request.TimeZone,
+			Currency = request.Currency,
+		};
 
-		// create the user and company, register the address
+		// save company to db
+		_context.Companies.Add(company);
+		await _context.SaveChangesAsync();
 
-		return Ok();
+		// create employee
+		var employee = new Employee
+		{
+			FirstName = request.FirstName,
+			LastName = request.LastName,
+			Email = request.Email,
+			PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+			Wage = request.Wage,
+			CompanyId = company.Id,
+			HireDate = DateTime.UtcNow,
+		};
+
+		// create address
+		var address = new Address
+		{
+			StreetLine1 = request.StreetLine1,
+			StreetLine2 = request.StreetLine2,
+			Country = request.Country,
+			Province = request.Province,
+			City = request.City,
+			PostalCode = request.PostalCode,
+			CompanyId = company.Id
+		};
+
+		// save employee and address to db
+		_context.Employees.Add(employee);
+		_context.Addresses.Add(address);
+		await _context.SaveChangesAsync();
+
+		// return OK
+		return Ok("Registration successful");
 	}
 
 	// endpoint to search for email, verify password and return user id, email and role upon success
