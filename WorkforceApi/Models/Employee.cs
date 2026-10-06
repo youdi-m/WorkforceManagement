@@ -16,7 +16,7 @@ public class Employee
 
 	// shift
 	[Precision (18, 2)]
-	public required decimal Wage {get; set;}
+	public decimal? Wage {get; set;}
 	public ICollection<Shift> Shifts {get; set;} = new List<Shift>();
 	public ICollection<LeaveRequest> LeaveRequests {get; set;} = new List<LeaveRequest>();
 	public ICollection<LeaveBalance> LeaveBalances {get; set;} = new List<LeaveBalance>();

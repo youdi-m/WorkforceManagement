@@ -69,7 +69,6 @@ public class AuthController : ControllerBase
 				Email = request.Email,
 				PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
 				Role = EmployeeRole.HR,
-				Wage = request.Wage,
 				CompanyId = company.Id,
 				HireDate = DateTime.UtcNow,
 			};
