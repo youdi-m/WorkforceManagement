@@ -1,6 +1,6 @@
 namespace WorkforceApi.Dtos;
 
-public class UpdateEmployee
+public class UpdateEmployeeDTO
 {
 	public string? FirstName {get; set;}
 	public string? LastName {get; set;} 

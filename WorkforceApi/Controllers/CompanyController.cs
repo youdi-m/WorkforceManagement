@@ -24,7 +24,7 @@ public class CompanyController : ControllerBase
 	public async Task<IActionResult> GetCompanies()
 	{
 		var companies = await _context.Companies
-		.Select(c => new CompanyResponse
+		.Select(c => new CompanyResponseDTO
 		{
 			Id = c.Id,
 			Name = c.Name,

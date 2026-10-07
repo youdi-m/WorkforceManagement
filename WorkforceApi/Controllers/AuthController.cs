@@ -31,9 +31,9 @@ public class AuthController : ControllerBase
 
 	// endpoint to register a new user with a company and address
 	[HttpPost("Register")]
-	public async Task<IActionResult> Register(RegisterRequest request)
+	public async Task<IActionResult> Register(RegisterRequestDTO request)
 	{
-		// verify if user and company exist
+		// verify if user or company exist
 
 		var email = await _context.Employees.FirstOrDefaultAsync(e => e.Email == request.Email);
 		if (email != null) {return Conflict("Email already registered");}
@@ -107,7 +107,7 @@ public class AuthController : ControllerBase
 
 	// endpoint to search for email, verify password and return user id, email and role upon success
 	[HttpPost("Login")]
-	public async Task<IActionResult> Login(LoginRequest request)
+	public async Task<IActionResult> Login(LoginRequestDTO request)
 	{
 		// search for email in db, return Invalid Credentilas if not found
 		var user = await _context.Employees.FirstOrDefaultAsync(e => e.Email == request.Email);

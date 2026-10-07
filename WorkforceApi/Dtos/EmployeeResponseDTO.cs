@@ -1,6 +1,6 @@
 namespace WorkforceApi.Dtos;
 
-public class EmployeeResponse
+public class EmployeeResponseDTO
 {
 	public int Id {get; set;}
 	public string FirstName {get; set;} = string.Empty;
@@ -10,8 +10,8 @@ public class EmployeeResponse
 	public string Title {get; set;} = string.Empty;
 	public int? ManagerId {get; set;} 
 	public int Status {get; set;} 
-	public TimeOnly ShiftStartTime {get; set;}
-	public TimeOnly ShiftEndTime {get; set;}
-	public DateOnly DateOfBirth {get; set;}
+	public TimeOnly? ShiftStartTime {get; set;}
+	public TimeOnly? ShiftEndTime {get; set;}
+	public DateOnly? DateOfBirth {get; set;}
 
 }

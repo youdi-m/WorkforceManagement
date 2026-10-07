@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc.Formatters;
-
 namespace WorkforceApi.Dtos;
 
 public class EnumType

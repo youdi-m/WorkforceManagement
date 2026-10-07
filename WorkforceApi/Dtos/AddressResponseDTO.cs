@@ -1,6 +1,6 @@
 namespace WorkforceApi.Dtos;
 
-public class AddressResponse
+public class AddressResponseDTO
 {
 	public int Id {get; set;}
 	public required string StreetLine1 {get; set;}

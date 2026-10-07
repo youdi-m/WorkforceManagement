@@ -1,6 +1,7 @@
 namespace WorkforceApi.Dtos;
 
-public class RegisterRequest {
+public class RegisterRequestDTO
+{
 	// employee info
 	public required string FirstName {get; set;}
 	public required string LastName {get; set;}

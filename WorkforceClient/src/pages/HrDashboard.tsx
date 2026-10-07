@@ -37,6 +37,7 @@ function HrDashboard() {
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
 	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
 	const [role, setRole] = useState('')
 	const [title, setTitle] = useState('')
 	const [managerId, setManagerId] = useState('')
@@ -53,7 +54,7 @@ function HrDashboard() {
 
 	}, [])
 
-	// GET request to show employees on the dashboard
+	// request to show employees on the dashboard
 	async function showEmployees() {
 
 		const response = await fetch('http://localhost:5016/api/employee', {
@@ -61,7 +62,8 @@ function HrDashboard() {
 			headers: {'Authorization': `Bearer ${token}`},
 		})
 
-		if(response.ok) {
+		if(response.ok)
+		{
 			const data = await response.json()
 			setEmployees(data)
 		}
@@ -71,7 +73,7 @@ function HrDashboard() {
 		}
 	}
 
-	// GET request to fetch role enum
+	// request to fetch role enum
 	async function fetchRoles() {
 
 		const response = await fetch('http://localhost:5016/api/enum/employeeroles', {
@@ -79,7 +81,8 @@ function HrDashboard() {
 			headers: {'Authorization': `Bearer ${token}`},
 		})
 
-		if(response.ok) {
+		if(response.ok)
+		{
 			const data = await response.json()
 			setRoles(data)
 			console.log('fetched roles')
@@ -89,7 +92,7 @@ function HrDashboard() {
 		}
 	}
 
-	// GET request to fetch status enum
+	// request to fetch status enum
 	async function fetchStatuses() {
 
 		const response = await fetch('http://localhost:5016/api/enum/employeestatuses', {
@@ -107,28 +110,51 @@ function HrDashboard() {
 		}
 	}
 
-	// PUT request to update employee
-	async function updateEmployee() {
+	// request to update employee
+	const updateEmployee = async () => {
 
 		if (selectedEmployee?.id != null)
 		{
 			const response = await fetch(`http://localhost:5016/api/employee/update/${selectedEmployee.id}`, {
 				method: 'PUT',
-				headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-				body: JSON.stringify({firstName: firstName, lastName: lastName, email: email, role: Number(role),
-															title: title, managerId: Number(managerId), status: Number(status),
-															shiftStart: shiftStart, shiftEnd: shiftEnd, dateOfBrith: dateOfBrith
-				})
+				headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+				body: JSON.stringify({firstName: firstName, lastName: lastName, email: email,
+					
+															role: Number(role), title: title,
+															managerId: Number(managerId), status: Number(status),
+															
+															shiftStart: shiftStart, shiftEnd: shiftEnd,
+															dateOfBrith: dateOfBrith})
 			})
 
-			if(response.ok) {
-				console.log('updating employee')
+			if(response.ok)
+			{
+				alert('updated employee')
 				showEmployees()
 			}
 			else
 			{
-				console.log('error updating employee')
+				alert('error updating employee')
 			}
+		}
+	}
+
+	// request to create an employee
+	const createEmployee = async () => {
+		const response = await fetch('http://localhost:5016/api/employee/create', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+			body: JSON.stringify({firstName: firstName, lastName: lastName,
+														email: email, password: password})
+		})
+
+		if(response.ok)
+		{
+			alert('user created')
+		}
+		else
+		{
+			alert('failed to create user')
 		}
 	}
 
@@ -188,7 +214,7 @@ function HrDashboard() {
 				</div>
 			</div>
 		</div>
-		)
+	)
 }
 
 export default HrDashboard

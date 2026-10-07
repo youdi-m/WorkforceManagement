@@ -24,7 +24,7 @@ public class AddressController : ControllerBase
 	public async Task<IActionResult> GetAddresses()
 	{
 		var addresses = await _context.Addresses
-		.Select(a => new AddressResponse
+		.Select(a => new AddressResponseDTO
 		{
 			Id = a.Id,
 			StreetLine1 = a.StreetLine1,

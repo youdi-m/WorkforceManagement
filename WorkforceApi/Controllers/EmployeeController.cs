@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using WorkforceApi.Data;
 using WorkforceApi.Models;
 using WorkforceApi.Dtos;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace WorkforceApi.Controllers;
 
@@ -26,7 +27,7 @@ public class EmployeeController : ControllerBase
 	public async Task<IActionResult> GetEmployees()
 	{
 		var employees = await _context.Employees
-		.Select(e => new EmployeeResponse
+		.Select(e => new EmployeeResponseDTO
 		{
 			Id = e.Id,
 			FirstName = e.FirstName,
@@ -40,10 +41,50 @@ public class EmployeeController : ControllerBase
 		return Ok(employees);
 	}
 
+	// function to create a new employee
+	[HttpPost("create")]
+	public async Task<IActionResult> CreateEmployee(CreateEmployeeRequestDTO request)
+	{
+		// grabbing companyid from requester
+		var companyIdClaim = User.FindFirst("CompanyId")?.Value;
+		if (companyIdClaim == null) {return StatusCode(500, "Invalid user company");}
+
+		// checking if the user email is already registered to the company
+		var email = await _context.Employees.FirstOrDefaultAsync(e => e.Email == request.Email &&
+																														 e.CompanyId == int.Parse(companyIdClaim));
+		if (email != null) {return Conflict("User already exists with company");}
+
+		using var transaction = await _context.Database.BeginTransactionAsync();
+
+		try
+		{
+			var employee = new Employee
+			{
+				FirstName = request.FirstName,
+				LastName = request.LastName,
+				Email = request.Email,
+				PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+				CompanyId = int.Parse(companyIdClaim),
+				HireDate = DateTime.UtcNow,
+			};
+
+			// save employee and address to db
+			_context.Employees.Add(employee);
+			await _context.SaveChangesAsync();
+		}
+		catch
+		{
+			// return status 500 if the DB transaction failed and discard changes
+			return StatusCode(500, "Registration Failed");
+		}
+
+		return Ok("Registration Successful");
+	}
+
 	// function to update an employee
 	[HttpPut("update/{id}")]
 	
-	public async Task<IActionResult> UpdateEmployee(int id, UpdateEmployee updatedEmployee)
+	public async Task<IActionResult> UpdateEmployee(int id, UpdateEmployeeDTO updatedEmployee)
 	{
 		if (!ModelState.IsValid) return BadRequest(ModelState);
 
